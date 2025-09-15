@@ -1,7 +1,7 @@
 {
   "name": "my-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "homepage": "https://nalluraj.github.io/nalluraj-portfolio",
   "type": "module",
   "scripts": {

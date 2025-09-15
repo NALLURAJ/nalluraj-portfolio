@@ -43,46 +43,46 @@ export default function Navbar({ children }) {
         className="fixed top-0 left-0 h-full bg-blue-950/90 dark:bg-gray-800/90 backdrop-blur-md
                    border-r border-blue-900/50 dark:border-gray-700 shadow-xl flex flex-col z-20"
       >
-       {/* Profile (hidden when collapsed) */}
-<AnimatePresence>
-  {sidebarOpen && (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col items-center px-4 py-6"
-    >
-      <img
-        src={profilePic}
-        alt="Nalluraj"
-        className="w-20 h-20 rounded-full border-2 border-blue-400 shadow-lg mb-4 object-cover"
-      />
-      <h1
-        className="text-2xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 
-                   bg-clip-text text-transparent drop-shadow-md"
-      >
-        Nalluraj
-      </h1>
-      <p className="mt-1 text-sm font-medium text-blue-200/90 dark:text-gray-300 italic">
-        Aspiring Data Scientist
-      </p>
-    </motion.div>
-  )}
-</AnimatePresence>
+        {/* Profile (only when expanded) */}
+        <AnimatePresence>
+          {sidebarOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center px-4 py-6 relative"
+            >
+              <img
+                src={profilePic}
+                alt="Nalluraj"
+                className="w-20 h-20 rounded-full border-2 border-blue-400 shadow-lg mb-4 object-cover"
+              />
+              <h1
+                className="text-2xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 
+                           bg-clip-text text-transparent drop-shadow-md"
+              >
+                Nalluraj
+              </h1>
+              <p className="mt-1 text-sm font-medium text-blue-200/90 dark:text-gray-300 italic">
+                Aspiring Data Scientist
+              </p>
 
+              {/* ✅ Theme toggle near profile when expanded */}
+              <div className="absolute top-2 right-2">
+                <ThemeToggle collapsed={false} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Nav Links (spread evenly with flex-1) */}
+        {/* Nav Links */}
         <nav className="flex-1 flex flex-col justify-evenly px-2">
           {links.map((link) => {
             const isActive = location.pathname === link.path;
             const Icon = link.icon;
             return (
-              <motion.div
-                key={link.name}
-                whileHover={{ x: 5 }}
-                className="relative"
-              >
+              <motion.div key={link.name} whileHover={{ x: 5 }} className="relative">
                 <Link
                   to={link.path}
                   className={`group flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 ${
@@ -92,9 +92,7 @@ export default function Navbar({ children }) {
                   }`}
                 >
                   <Icon
-                    className={`${
-                      sidebarOpen ? "w-5 h-5" : "w-7 h-7"
-                    } transition-all duration-300`}
+                    className={`${sidebarOpen ? "w-5 h-5" : "w-7 h-7"} transition-all duration-300`}
                   />
                   <AnimatePresence>
                     {sidebarOpen && (
@@ -114,8 +112,8 @@ export default function Navbar({ children }) {
           })}
         </nav>
 
-        {/* Footer Widgets (always visible toggle) */}
-        <div className="px-4 py-6 space-y-3">
+        {/* Footer Widgets */}
+        <div className="px-4 py-6 space-y-3 relative">
           {sidebarOpen && (
             <>
               <a
@@ -139,11 +137,12 @@ export default function Navbar({ children }) {
             </>
           )}
 
-          {/* Theme Toggle - always visible */}
-          <div className="flex justify-center">
-            <ThemeToggle collapsed={!sidebarOpen} />
-
-          </div>
+          {/* ✅ Theme toggle at bottom when collapsed */}
+          {!sidebarOpen && (
+            <div className="flex justify-center absolute bottom-6 left-1/2 -translate-x-1/2">
+              <ThemeToggle collapsed />
+            </div>
+          )}
         </div>
       </motion.aside>
 
