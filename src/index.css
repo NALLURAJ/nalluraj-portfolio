@@ -1,0 +1,58 @@
+/* Reset everything */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  overflow: hidden; /* main content will scroll, not body */
+}
+@layer base {
+  h1 {
+    @apply font-heading text-4xl font-bold tracking-tight;
+  }
+  h2 {
+    @apply font-subheading text-2xl font-semibold;
+  }
+  h3, h4 {
+    @apply font-subheading text-xl;
+  }
+  p, span, li, a {
+    @apply font-body text-base;
+  }
+}
+
+
+/* 4) Tailwind layers (keep after reset) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientMove 6s ease infinite;
+}
+/* index.css */
+@keyframes blink {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+.blink-caret {
+  animation: blink 1s infinite;
+}
