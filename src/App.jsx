@@ -12,8 +12,11 @@ import Resume from "./pages/Resume";
 import Contact from "./pages/Contact";
 
 function App() {
+  // GitHub Pages serves this app under /nalluraj-portfolio, while the dev
+  // server serves it at the root. Hard-coding one basename for both is what
+  // made `npm run dev` render a blank page.
   return (
-    <Router basename="/nalluraj-portfolio">
+    <Router basename={import.meta.env.DEV ? "/" : "/nalluraj-portfolio"}>
       <Navbar>
         <div className="flex flex-col min-h-screen">
           {/* Main Routed Pages */}

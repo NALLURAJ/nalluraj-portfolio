@@ -1,6 +1,6 @@
 // src/pages/Skills.jsx
 import { motion } from "framer-motion";
-import { Database, Brain, Code, BarChart, FileSpreadsheet } from "lucide-react";
+import { Radio, HardDrive, Wand2, Workflow, BarChart, Code2 } from "lucide-react";
 import pythonLogo from "../assets/python.png";
 import pandasLogo from "../assets/pandas.png";
 import numpyLogo from "../assets/numpy.png";
@@ -10,230 +10,184 @@ import tableauLogo from "../assets/tableau.png";
 import excelLogo from "../assets/excel.png";
 
 export default function Skills() {
-  const skills = [
-    { name: "Python", level: 90 },
-    { name: "SQL", level: 95 },
-    { name: "Machine Learning", level: 80 },
-    { name: "Data Visualization", level: 90 },
-    { name: "Power BI", level: 95 },
-    { name: "Tableau", level: 85 },
-    { name: "Excel", level: 95 },
-    { name: "Git/GitHub", level: 95 },
-    { name: "NLP", level: 75 },        // 👈 added
-    { name: "Statistics", level: 75 }, // 👈 added
+  // Every tool below names where it was actually used, so the list is
+  // checkable rather than self-assessed.
+  const groups = [
+    {
+      title: "Ingestion & Change Data Capture",
+      icon: <Radio className="w-7 h-7 text-cyan-400" />,
+      accent: "border-cyan-400/40",
+      items: [
+        { name: "Debezium", where: "FreshRoute" },
+        { name: "Apache Kafka", where: "FreshRoute" },
+        { name: "Postgres logical replication", where: "FreshRoute" },
+        { name: "REST API ingestion", where: "Job Market Platform" },
+        { name: "ETL pipelines", where: "National Informatics Centre" },
+      ],
+    },
+    {
+      title: "Storage & Warehousing",
+      icon: <HardDrive className="w-7 h-7 text-blue-400" />,
+      accent: "border-blue-400/40",
+      items: [
+        { name: "Apache Iceberg", where: "FreshRoute" },
+        { name: "Snowflake", where: "Job Market Platform" },
+        { name: "PostgreSQL", where: "FreshRoute" },
+        { name: "MySQL", where: "Job Market Platform" },
+        { name: "AWS S3 / object storage", where: "Job Market Platform" },
+      ],
+    },
+    {
+      title: "Transformation & Modelling",
+      icon: <Wand2 className="w-7 h-7 text-purple-400" />,
+      accent: "border-purple-400/40",
+      items: [
+        { name: "dbt", where: "FreshRoute · Job Market" },
+        { name: "SQL", where: "across every project" },
+        { name: "Spark Structured Streaming", where: "FreshRoute" },
+        { name: "Dimensional modelling & SCD Type 2", where: "FreshRoute" },
+        { name: "pandas / NumPy", where: "SkillBridge · MediPredict" },
+      ],
+    },
+    {
+      title: "Orchestration & Reliability",
+      icon: <Workflow className="w-7 h-7 text-teal-400" />,
+      accent: "border-teal-400/40",
+      items: [
+        { name: "Dagster", where: "FreshRoute" },
+        { name: "Apache Airflow", where: "Job Market Platform" },
+        { name: "Docker & Compose", where: "FreshRoute · Job Market" },
+        { name: "Data quality testing", where: "FreshRoute" },
+        { name: "Unit & integration testing", where: "National Informatics Centre" },
+        { name: "GitHub Actions CI", where: "FreshRoute" },
+      ],
+    },
+    {
+      title: "Analysis & Visualisation",
+      icon: <BarChart className="w-7 h-7 text-yellow-400" />,
+      accent: "border-yellow-400/40",
+      items: [
+        { name: "Trino", where: "FreshRoute" },
+        { name: "Streamlit", where: "FreshRoute · Job Market · MediPredict" },
+        { name: "Plotly", where: "Job Market Platform" },
+        { name: "Power BI", where: "analytics coursework" },
+        { name: "Tableau", where: "analytics coursework" },
+        { name: "Excel", where: "analytics coursework" },
+      ],
+    },
+    {
+      title: "Languages & Foundations",
+      icon: <Code2 className="w-7 h-7 text-green-400" />,
+      accent: "border-green-400/40",
+      items: [
+        { name: "Python", where: "primary language" },
+        { name: "SQL", where: "primary language" },
+        { name: "MATLAB", where: "ECE 503 optimisation" },
+        { name: "JavaScript / React", where: "this site" },
+        { name: "Git & GitHub", where: "everywhere" },
+        { name: "NLP & machine learning", where: "SkillBridge · MNIST · MediPredict" },
+      ],
+    },
   ];
 
-  const softSkills = [
-    "Problem Solving",
-    "Analytical Thinking",
-    "Collaboration & Teamwork",
-    "Report Writing & Documentation",
-    "Data Cleaning & Preprocessing",
-    "Research & Literature Review",
-    "Adaptability & Continuous Learning",
-    "Presentation Skills",
+  const professional = [
+    "Agile / Scrum delivery",
+    "Technical documentation",
+    "Data cleaning & preprocessing",
+    "Analytical problem solving",
+    "Research & literature review",
+    "Collaboration in small teams",
+    "Presenting technical work",
   ];
 
   return (
-    <div className="min-h-screen text-white px-6 py-12 ">
-      {/* Header */}
+    <div className="min-h-screen text-white px-6 py-12">
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-5xl md:text-6xl font-extrabold text-center mb-8 
-                   bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 
+        className="text-5xl md:text-6xl font-extrabold text-center mb-6
+                   bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400
                    bg-clip-text text-transparent drop-shadow-lg"
       >
-        Skills & Expertise
+        Skills & Toolchain
       </motion.h1>
 
-      <p className="text-lg md:text-xl text-center text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-  A blend of programming, data analysis and professional skills developed
-  through projects, internship, and my academic journey.
-</p>
+      <p className="text-lg text-center text-gray-300 max-w-3xl mx-auto mb-14 leading-relaxed">
+        Grouped the way a data platform is actually built, from ingestion
+        through to the dashboard. Each tool names where I used it, so you can
+        go and check.
+      </p>
 
-
-      {/* Two-column layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl w-full mx-auto">
-        {/* Left: Circular icons */}
-        <div className="flex flex-col gap-8 items-center md:items-start">
-          {/* Programming */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {groups.map((g, i) => (
           <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 10px rgba(59,130,246,0.4)",
-                "0 0 30px rgba(59,130,246,0.8)",
-                "0 0 10px rgba(59,130,246,0.4)",
-              ],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="w-24 h-24 rounded-full bg-gray-800/70 backdrop-blur-md flex items-center justify-center"
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.06 }}
+            className={`bg-gray-900/50 backdrop-blur-md rounded-2xl p-6 border ${g.accent} shadow-lg`}
           >
-            <Code className="w-12 h-12 text-blue-400" />
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2 bg-gray-800/70 rounded-xl">{g.icon}</div>
+              <h2 className="text-lg font-semibold leading-tight">{g.title}</h2>
+            </div>
+            <ul className="flex flex-col gap-3">
+              {g.items.map((item, idx) => (
+                <li key={idx} className="leading-tight">
+                  <span className="text-gray-100 font-medium">{item.name}</span>
+                  <span className="block text-xs text-gray-400 mt-0.5">
+                    {item.where}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </motion.div>
-
-          {/* Database */}
-          <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 10px rgba(34,197,94,0.4)",
-                "0 0 30px rgba(34,197,94,0.8)",
-                "0 0 10px rgba(34,197,94,0.4)",
-              ],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="w-24 h-24 rounded-full bg-gray-800/70 backdrop-blur-md flex items-center justify-center"
-          >
-            <Database className="w-12 h-12 text-green-400" />
-          </motion.div>
-
-          {/* AI/ML */}
-          <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 10px rgba(168,85,247,0.4)",
-                "0 0 30px rgba(168,85,247,0.8)",
-                "0 0 10px rgba(168,85,247,0.4)",
-              ],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="w-24 h-24 rounded-full bg-gray-800/70 backdrop-blur-md flex items-center justify-center"
-          >
-            <Brain className="w-12 h-12 text-purple-400" />
-          </motion.div>
-
-          {/* Visualization */}
-          <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 10px rgba(250,204,21,0.4)",
-                "0 0 30px rgba(250,204,21,0.8)",
-                "0 0 10px rgba(250,204,21,0.4)",
-              ],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="w-24 h-24 rounded-full bg-gray-800/70 backdrop-blur-md flex items-center justify-center"
-          >
-            <BarChart className="w-12 h-12 text-yellow-400" />
-          </motion.div>
-
-          {/* Spreadsheet */}
-          <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 10px rgba(20,184,166,0.4)",
-                "0 0 30px rgba(20,184,166,0.8)",
-                "0 0 10px rgba(20,184,166,0.4)",
-              ],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="w-24 h-24 rounded-full bg-gray-800/70 backdrop-blur-md flex items-center justify-center"
-          >
-            <FileSpreadsheet className="w-12 h-12 text-teal-400" />
-          </motion.div>
-        </div>
-
-        {/* Right: Progress Bars */}
-        <div className="flex flex-col gap-8">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={index}
-              className="w-full"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.6 }}
-            >
-              <div className="flex justify-between mb-3">
-                <span className="font-bold text-blue-400 text-lg">
-                  {skill.name}
-                </span>
-                <span className="text-gray-400 text-lg">{skill.level}%</span>
-              </div>
-              <div className="w-full bg-gray-800 rounded-full h-4 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1.2, delay: index * 0.3 }}
-                  className="bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-400 h-4 rounded-full"
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        ))}
       </div>
 
-{/* Professional Skills */}
-<motion.h2
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.5, duration: 0.8 }}
-  className="text-3xl font-bold text-cyan-300 drop-shadow-lg mt-24 mb-10 text-center"
->
-  Professional & Applied Skills
-</motion.h2>
+      <motion.h2
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="text-3xl font-bold text-cyan-300 drop-shadow-lg mt-20 mb-8 text-center"
+      >
+        Working Practices
+      </motion.h2>
 
-{/* Skill Tags */}
-<div className="flex flex-wrap gap-4 justify-center max-w-4xl mx-auto">
-  {softSkills.map((skill, index) => (
-    <motion.a
-      key={index}
-      href={`https://www.google.com/search?q=${encodeURIComponent(
-        skill + " in Data Science"
-      )}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      whileHover={{ scale: 1.05 }}
-      className="relative px-6 py-3 rounded-lg font-medium text-lg cursor-pointer
-                 text-gray-200 bg-gray-800/60 backdrop-blur-md 
-                 shadow-md border border-gray-700
-                 hover:text-white hover:bg-gray-700/70 
-                 transition-all duration-300"
-    >
-      {skill}
-    </motion.a>
-  ))}
-</div>
+      <div className="flex flex-wrap gap-3 justify-center max-w-4xl mx-auto">
+        {professional.map((skill, index) => (
+          <span
+            key={index}
+            className="px-5 py-2.5 rounded-lg font-medium
+                       text-gray-200 bg-gray-800/60 backdrop-blur-md
+                       shadow-md border border-gray-700"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
 
-
-
-      {/* Logos */}
-      <div className="flex gap-8 mt-16 flex-wrap justify-center">
-        <img
-          src={pythonLogo}
-          alt="Python"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
-        <img
-          src={pandasLogo}
-          alt="Pandas"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
-        <img
-          src={numpyLogo}
-          alt="NumPy"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
-        <img
-          src={tensorflowLogo}
-          alt="TensorFlow"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
-        <img
-          src={powerbiLogo}
-          alt="Power BI"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
-        <img
-          src={tableauLogo}
-          alt="Tableau"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
-        <img
-          src={excelLogo}
-          alt="Excel"
-          className="w-16 h-16 rounded-xl shadow-md"
-        />
+      <div className="flex gap-8 mt-16 flex-wrap justify-center opacity-90">
+        {[
+          [pythonLogo, "Python"],
+          [pandasLogo, "Pandas"],
+          [numpyLogo, "NumPy"],
+          [tensorflowLogo, "TensorFlow"],
+          [powerbiLogo, "Power BI"],
+          [tableauLogo, "Tableau"],
+          [excelLogo, "Excel"],
+        ].map(([src, alt]) => (
+          <img
+            key={alt}
+            src={src}
+            alt={alt}
+            title={alt}
+            className="w-14 h-14 rounded-xl shadow-md"
+          />
+        ))}
       </div>
     </div>
   );

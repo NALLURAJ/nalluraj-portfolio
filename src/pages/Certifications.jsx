@@ -1,9 +1,19 @@
 // src/pages/Certifications.jsx
 import { motion } from "framer-motion";
-import { Award, BookOpen, Globe, Rocket, Shield, Terminal } from "lucide-react";
+import { Award, BookOpen, Globe, Rocket, Shield, Terminal, Cloud } from "lucide-react";
 
 export default function Certifications() {
   const certifications = [
+    {
+      title: "AWS Certified Cloud Practitioner",
+      org: "Amazon Web Services",
+      date: "Issued May 2026",
+      icon: <Cloud className="w-8 h-8 text-orange-400" />,
+      status: "Completed",
+      link: "https://cp.certmetrics.com/amazon/en/public/verify/credential/212c4daddbfa45178a127897ed34afc5",
+      color: "from-orange-500/20 via-orange-400/10 to-transparent",
+      glow: "rgba(249,115,22,0.8)", // orange glow
+    },
     {
       title: "Python Programming Fundamentals",
       org: "MyGreatLearning",
@@ -67,9 +77,9 @@ export default function Certifications() {
   ];
 
   const futurePlans = [
-    { title: "AWS Cloud Practitioner" },
-    { title: "Tableau / Power BI" },
-    { title: "Advanced Machine Learning" },
+    { title: "AWS Certified Data Engineer – Associate" },
+    { title: "dbt Analytics Engineering Certification" },
+    { title: "SnowPro Core" },
   ];
 
   return (
@@ -108,6 +118,9 @@ export default function Certifications() {
               {item.icon}
               <h2 className="mt-4 text-xl font-semibold">{item.title}</h2>
               <p className="text-gray-400">{item.org}</p>
+              {item.date && (
+                <p className="text-gray-500 text-sm mt-1">{item.date}</p>
+              )}
               <span
                 className={`mt-3 text-sm px-3 py-1 rounded-full ${
                   item.status === "Completed"
@@ -117,6 +130,16 @@ export default function Certifications() {
               >
                 {item.status}
               </span>
+              {item.link && (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 text-sm text-orange-300 hover:text-orange-200 underline underline-offset-4"
+                >
+                  Verify credential →
+                </a>
+              )}
             </div>
           </motion.div>
         ))}

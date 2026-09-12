@@ -9,18 +9,18 @@ export default function Resume() {
       title: "Education",
       icon: <GraduationCap className="w-6 h-6 text-blue-400" />,
       details: [
-        "M.Sc Applied Data Science (Upcoming) – University of Victoria, Canada",
-        "B.Tech Computer Science & Engineering – Karunya Institute of Technology",
+        "M.Sc Applied Data Science – University of Victoria, Canada (Jan 2026 – present)",
+        "B.Tech Computer Science & Engineering – Karunya Institute of Technology (2021 – 2025)",
       ],
       glow: "rgba(59,130,246,0.8)", // blue glow
     },
     {
-      title: "Key Skills",
+      title: "Experience",
       icon: <Briefcase className="w-6 h-6 text-green-400" />,
       details: [
-        "Python, Data Science, Machine Learning",
-        "SQL, Tableau, Power BI",
-        "Problem Solving & Team Collaboration",
+        "Software Developer Intern – National Informatics Centre, New Delhi (Dec 2024 – Jun 2025)",
+        "Built ETL pipelines for a public-sector platform serving 10,000+ users",
+        "95% code coverage across unit and integration tests; Agile / Scrum",
       ],
       glow: "rgba(34,197,94,0.8)", // green glow
     },
@@ -29,8 +29,8 @@ export default function Resume() {
       icon: <Award className="w-6 h-6 text-yellow-400" />,
       details: [
         "IEEE Conference Paper on Zero-Trust Framework for IoT",
+        "AWS Certified Cloud Practitioner",
         "Hackathon Finalist – KHacks 2023",
-        "Global Security Conference – Nullcon 2023",
       ],
       glow: "rgba(250,204,21,0.8)", // yellow glow
     },

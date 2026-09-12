@@ -29,23 +29,30 @@ export default function About() {
       color: "rgba(59,130,246,0.9)", // blue glow
     },
     {
-      year: "2024",
+      year: "December 2024 – June 2025",
       title: "Software Developer Intern",
-      place: "National Informatics Centre, India",
+      place: "National Informatics Centre — New Delhi, India",
+      points: [
+        "Built a public-sector platform serving 10,000+ users, in a team of five",
+        "Developed ETL data processing pipelines feeding the platform",
+        "Reached 95% code coverage through unit and integration testing",
+        "Wrote the system documentation and technical specifications",
+        "Worked to an Agile / Scrum delivery cycle",
+      ],
       icon: <Laptop className="w-8 h-8 text-green-500" />,
       color: "rgba(34,197,94,0.9)", // green glow
     },
     {
       year: "2025",
-      title: "Certifications",
-      place: "Python, Data Science Bootcamp 2025 (in progress)",
+      title: "AWS Certified Cloud Practitioner",
+      place: "Amazon Web Services — verifiable credential",
       icon: <Award className="w-8 h-8 text-yellow-400" />,
       color: "rgba(245,158,11,0.9)", // amber/gold glow
     },
     {
-      year: "2026",
-      title: "Masters in Applied Data Science",
-      place: "University of Victoria, Canada (Jan 2026)",
+      year: "January 2026 – present",
+      title: "M.Sc Applied Data Science",
+      place: "University of Victoria, Victoria BC, Canada",
       icon: <Globe className="w-8 h-8 text-purple-500" />,
       color: "rgba(168,85,247,0.9)", // purple glow
     },
@@ -228,6 +235,13 @@ export default function About() {
           <h3 className="text-xl font-semibold text-white">{item.title}</h3>
           <p className="text-blue-200">{item.place}</p>
           <span className="text-sm text-blue-400">{item.year}</span>
+          {item.points && (
+            <ul className="mt-3 space-y-1.5 text-gray-300 text-sm list-disc list-inside marker:text-blue-400">
+              {item.points.map((pt, i) => (
+                <li key={i}>{pt}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </motion.div>
     ))}
