@@ -32,7 +32,7 @@ export default function Skills() {
       items: [
         { name: "Apache Iceberg", where: "FreshRoute" },
         { name: "Snowflake", where: "Job Market Platform" },
-        { name: "PostgreSQL", where: "FreshRoute" },
+        { name: "PostgreSQL", where: "ShipSignal · FreshRoute" },
         { name: "MySQL", where: "Job Market Platform" },
         { name: "AWS S3 / object storage", where: "Job Market Platform" },
       ],
@@ -42,7 +42,7 @@ export default function Skills() {
       icon: <Wand2 className="w-7 h-7 text-purple-400" />,
       accent: "border-purple-400/40",
       items: [
-        { name: "dbt", where: "FreshRoute · Job Market" },
+        { name: "dbt", where: "ShipSignal · FreshRoute · Job Market" },
         { name: "SQL", where: "across every project" },
         { name: "Spark Structured Streaming", where: "FreshRoute" },
         { name: "Dimensional modelling & SCD Type 2", where: "FreshRoute" },
@@ -57,9 +57,9 @@ export default function Skills() {
         { name: "Dagster", where: "FreshRoute" },
         { name: "Apache Airflow", where: "Job Market Platform" },
         { name: "Docker & Compose", where: "FreshRoute · Job Market" },
-        { name: "Data quality testing", where: "FreshRoute" },
+        { name: "Data quality testing", where: "ShipSignal · FreshRoute" },
         { name: "Unit & integration testing", where: "National Informatics Centre" },
-        { name: "GitHub Actions CI", where: "FreshRoute" },
+        { name: "GitHub Actions CI", where: "ShipSignal · FreshRoute" },
       ],
     },
     {
@@ -68,11 +68,25 @@ export default function Skills() {
       accent: "border-yellow-400/40",
       items: [
         { name: "Trino", where: "FreshRoute" },
-        { name: "Streamlit", where: "FreshRoute · Job Market · MediPredict" },
+        { name: "Streamlit", where: "ShipSignal · FreshRoute · Job Market" },
         { name: "Plotly", where: "Job Market Platform" },
         { name: "Power BI", where: "analytics coursework" },
         { name: "Tableau", where: "analytics coursework" },
         { name: "Excel", where: "analytics coursework" },
+      ],
+    },
+    {
+      title: "Statistics & LLM Applications",
+      icon: <BarChart className="w-7 h-7 text-emerald-400" />,
+      accent: "border-emerald-400/40",
+      items: [
+        { name: "Hypothesis testing & confidence intervals", where: "ShipSignal" },
+        { name: "Logistic & linear regression", where: "ShipSignal" },
+        { name: "Time series forecasting (SARIMA, statsmodels)", where: "ShipSignal" },
+        { name: "LLM prompting & retrieval (RAG)", where: "ShipSignal" },
+        { name: "LLM evaluation on a labelled question set", where: "ShipSignal" },
+        { name: "SQL guardrails (sqlglot, read-only access)", where: "ShipSignal" },
+        { name: "FastAPI services", where: "ShipSignal" },
       ],
     },
     {

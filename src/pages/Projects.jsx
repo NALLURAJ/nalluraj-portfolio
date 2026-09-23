@@ -1,8 +1,20 @@
 import { motion } from "framer-motion";
-import { Database, Layers, Brain, Cpu, Shield, LineChart } from "lucide-react";
+import { Database, Layers, Brain, Cpu, Shield, LineChart, BarChart3 } from "lucide-react";
 
 export default function Projects() {
   const featured = [
+    {
+      title: "ShipSignal — E-Commerce Analytics & LLM Assistant",
+      kind: "Analytics · Statistics · LLM",
+      desc:
+        "A Postgres and dbt warehouse over ~100k marketplace orders, four statistical analyses, a forecast, and a local LLM that answers questions about the data by writing SQL against the warehouse.",
+      highlight:
+        "Customers whose first order arrived late reordered 1.22% of the time against 1.80% on time (95% CI -0.92 to -0.24 pp, p = 0.004). The assistant was scored on 40 questions with known answers across four prompt versions, improving 27/40 to 35/40.",
+      tags: ["Python", "dbt", "PostgreSQL", "statsmodels", "SARIMA", "FastAPI", "Streamlit", "Ollama", "pytest"],
+      icon: <BarChart3 className="w-10 h-10 text-emerald-400" />,
+      color: "from-emerald-500/20 to-emerald-900/10",
+      link: "https://github.com/NALLURAJ/shipsignal",
+    },
     {
       title: "FreshRoute — CDC Lakehouse",
       kind: "Data Engineering",
@@ -92,8 +104,7 @@ export default function Projects() {
       </motion.h1>
 
       <p className="text-lg text-center text-gray-300 max-w-3xl mx-auto mb-14 leading-relaxed">
-        Two production-shaped data platforms, and the coursework and research
-        behind them. Each one links to the repository, with the architecture
+        Analytics, data platforms, and the coursework and research behind them. Each one links to the repository, with the architecture
         and the trade-offs written up rather than summarised.
       </p>
 
