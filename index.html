@@ -2,23 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
-    <!-- Favicon (relative, safe) -->
-    <link rel="icon" type="image/svg+xml" href="./file.svg" />
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nalluraj Babu</title>
-    <script type="module" crossorigin src="./assets/index-xfN0okLx.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BDoEcQ6x.css">
+    <title>Nalluraj Babu · Data Analytics & Engineering</title>
+    <meta
+      name="description"
+      content="Nalluraj Babu, applied data science grad student at UVic. Data warehouses, statistics, dashboards and LLM tools."
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- set the theme before first paint so there is no flash -->
+    <script>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        if (t === "dark") document.documentElement.classList.add("dark");
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-CLG-W8kQ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BQWBKNqu.css">
   </head>
   <body>
     <div id="root"></div>
-
-    <!-- THIS is the only script a Vite source index.html must have -->
   </body>
 </html>
