@@ -1,58 +1,209 @@
-/* Reset everything */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body, #root {
-  height: 100%;
-  width: 100%;
-}
-
-body {
-  overflow: hidden; /* main content will scroll, not body */
-}
-@layer base {
-  h1 {
-    @apply font-heading text-4xl font-bold tracking-tight;
-  }
-  h2 {
-    @apply font-subheading text-2xl font-semibold;
-  }
-  h3, h4 {
-    @apply font-subheading text-xl;
-  }
-  p, span, li, a {
-    @apply font-body text-base;
-  }
-}
-
-
-/* 4) Tailwind layers (keep after reset) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+
+/* ---- theme ------------------------------------------------------------ */
+/* light: warm beige paper with a sunset gradient (orange -> rose -> plum)  */
+/* dark:  deep ink navy with a cool gradient (teal -> sky -> lavender)      */
+:root {
+  --bg: 245 239 228;
+  --surface: 252 248 241;
+  --ink: 43 33 24;
+  --muted: 110 96 82;
+  --line: 226 214 194;
+  --g1: 217 98 43;
+  --g2: 194 65 122;
+  --g3: 123 75 196;
+  --blob-a: 240 170 120;
+  --blob-b: 226 150 190;
+  --blob-c: 190 170 235;
+  --on-grad: 255 255 255;
+  color-scheme: light;
 }
 
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradientMove 6s ease infinite;
+.dark {
+  --bg: 13 18 30;
+  --surface: 20 27 44;
+  --ink: 232 236 244;
+  --muted: 150 162 186;
+  --line: 38 49 74;
+  --g1: 94 234 212;
+  --g2: 96 165 250;
+  --g3: 167 139 250;
+  --blob-a: 20 110 120;
+  --blob-b: 40 70 150;
+  --blob-c: 90 60 150;
+  --on-grad: 11 16 28;
+  color-scheme: dark;
 }
-/* index.css */
-@keyframes blink {
-  0%, 50%, 100% {
-    opacity: 1;
+
+html {
+  font-size: 106.25%; /* 17px base */
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  @apply bg-bg text-ink font-sans antialiased;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+::selection {
+  background: rgb(var(--g2) / 0.25);
+}
+
+/* ---- reusable bits ------------------------------------------------------ */
+@layer components {
+  .grad-text {
+    background: linear-gradient(100deg, rgb(var(--g1)), rgb(var(--g2)) 50%, rgb(var(--g3)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  25%, 75% {
-    opacity: 0;
+
+  .grad-bg {
+    background: linear-gradient(110deg, rgb(var(--g1)), rgb(var(--g2)) 50%, rgb(var(--g3)));
+  }
+
+  .card {
+    @apply rounded-2xl border border-line/80 bg-surface/70 backdrop-blur-md;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease,
+      box-shadow 0.35s ease, background-color 0.5s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgb(var(--g2) / 0.45);
+    box-shadow: 0 18px 40px -22px rgb(var(--g2) / 0.55);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line px-3 py-1 text-xs text-muted;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .label {
+    @apply font-mono text-xs uppercase tracking-[0.18em] text-muted;
+  }
+
+  .section-title {
+    @apply font-display text-4xl md:text-5xl font-semibold tracking-tight;
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .btn-primary {
+    @apply btn text-ongrad grad-bg;
+    background-size: 160% 100%;
+    background-position: 0% 50%;
+    transition: background-position 0.6s ease, transform 0.25s ease, box-shadow 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-position: 100% 50%;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -12px rgb(var(--g2) / 0.7);
+  }
+
+  .btn-ghost {
+    @apply btn border border-line text-ink bg-surface/60;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgb(var(--g2) / 0.5);
+    transform: translateY(-2px);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(90deg, rgb(var(--g1)), rgb(var(--g3)));
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s ease;
+  }
+
+  .link-underline:hover {
+    background-size: 100% 1.5px;
   }
 }
 
-.blink-caret {
-  animation: blink 1s infinite;
+/* ---- skills ------------------------------------------------------------ */
+.skill-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: rgb(var(--bg) / 0.7);
+  border: 1px solid rgb(var(--line));
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-pill:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  background:
+    linear-gradient(rgb(var(--surface)), rgb(var(--surface))) padding-box,
+    linear-gradient(110deg, rgb(var(--g1)), rgb(var(--g2)), rgb(var(--g3))) border-box;
+  box-shadow: 0 10px 24px -14px rgb(var(--g2) / 0.8);
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite;
+}
+
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---- slow drifting gradient blobs behind everything --------------------- */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.dark .blob {
+  opacity: 0.35;
+}
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(8vw, 6vh) scale(1.12); }
+}
+
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50% { transform: translate(-7vw, 8vh) scale(0.92); }
+}
+
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) scale(0.95); }
+  50% { transform: translate(5vw, -7vh) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .blob, .marquee-track { animation: none !important; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
 }

@@ -1,20 +1,26 @@
-// tailwind.config.js
 export default {
-  darkMode: "class", // ✅ enable class-based dark mode
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       fontFamily: {
-        heading: ["Space Grotesk", "sans-serif"],
-        subheading: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        display: ["Fraunces", "Georgia", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
-      transitionProperty: {
-        colors: "background-color, border-color, color, fill, stroke",
+      colors: {
+        bg: "rgb(var(--bg) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        ink: "rgb(var(--ink) / <alpha-value>)",
+        muted: "rgb(var(--muted) / <alpha-value>)",
+        line: "rgb(var(--line) / <alpha-value>)",
+        g1: "rgb(var(--g1) / <alpha-value>)",
+        g2: "rgb(var(--g2) / <alpha-value>)",
+        g3: "rgb(var(--g3) / <alpha-value>)",
+        ongrad: "rgb(var(--on-grad) / <alpha-value>)",
       },
-      transitionDuration: {
-        400: "400ms",
-        700: "700ms",
+      maxWidth: {
+        page: "1280px",
       },
     },
   },

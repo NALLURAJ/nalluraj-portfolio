@@ -1,47 +1,39 @@
-// src/App.jsx
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { motion, useScroll, useSpring } from "framer-motion";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Experience from "./components/Experience";
+import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Projects from "./pages/Projects";
-import Skills from "./pages/Skills";
-import Certifications from "./pages/Certifications";
-import Blog from "./pages/Blog";
-import Resume from "./pages/Resume";
-import Contact from "./pages/Contact";
+import Skills from "./components/Skills";
+import Work from "./components/Work";
+import { Background } from "./components/ui";
+import { profile } from "./data";
 
-function App() {
-  // GitHub Pages serves this app under /nalluraj-portfolio, while the dev
-  // server serves it at the root. Hard-coding one basename for both is what
-  // made `npm run dev` render a blank page.
+export default function App() {
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+
   return (
-    <Router basename={import.meta.env.DEV ? "/" : "/nalluraj-portfolio"}>
-      <Navbar>
-        <div className="flex flex-col min-h-screen">
-          {/* Main Routed Pages */}
-          <div className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/skills" element={<Skills />} />
-              <Route path="/certifications" element={<Certifications />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/resume" element={<Resume />} />
-              <Route path="/contact" element={<Contact />} />
+    <>
+      <motion.div style={{ scaleX: progress }} className="grad-bg fixed inset-x-0 top-0 z-[60] h-[2px] origin-left" />
+      <Background />
+      <Navbar />
 
-              {/* Redirect unknown routes to Home */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </div>
+      <main>
+        <Hero />
+        <About />
+        <Work />
+        <Experience />
+        <Skills />
+        <Contact />
+      </main>
 
-          {/* Footer stays below */}
-          <Footer />
-        </div>
-      </Navbar>
-    </Router>
+      <footer className="mx-auto flex max-w-page flex-wrap items-center justify-between gap-3 px-5 pb-10 text-sm text-muted md:px-8">
+        <span>© {new Date().getFullYear()} {profile.name}</span>
+        <a href="#top" className="link-underline">
+          Back to top ↑
+        </a>
+      </footer>
+    </>
   );
 }
-
-export default App;

@@ -1,170 +1,147 @@
-// src/components/Navbar.jsx
-import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Menu,
-  X,
-  Home,
-  User,
-  Folder,
-  Cpu,
-  Award,
-  BookOpen,
-  FileText,
-  Mail,
-} from "lucide-react";
-import profilePic from "../assets/profile.jpg";
-import githubLogo from "../assets/github.png";
-import leetcodeLogo from "../assets/leetcode.png";
-import ThemeToggle from "./ThemeToggle";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, Moon, Sun, X } from "lucide-react";
+import resume from "../assets/resume.pdf";
 
-export default function Navbar({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const location = useLocation();
+const links = [
+  { href: "#about", label: "About" },
+  { href: "#work", label: "Work" },
+  { href: "#experience", label: "Experience" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
+];
 
-  const links = [
-    { name: "Home", path: "/", icon: Home },
-    { name: "About", path: "/about", icon: User },
-    { name: "Projects", path: "/projects", icon: Folder },
-    { name: "Skills", path: "/skills", icon: Cpu },
-    { name: "Certifications", path: "/certifications", icon: Award },
-    { name: "Blog", path: "/blog", icon: BookOpen },
-    { name: "Resume", path: "/resume", icon: FileText },
-    { name: "Contact", path: "/contact", icon: Mail },
-  ];
+function useTheme() {
+  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+    try {
+      localStorage.setItem("theme", dark ? "dark" : "light");
+    } catch {
+      // private mode etc, not a big deal
+    }
+  }, [dark]);
+
+  return [dark, () => setDark((d) => !d)];
+}
+
+function ThemeToggle({ dark, onToggle }) {
+  return (
+    <button
+      onClick={onToggle}
+      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface/70 transition hover:border-g2/50"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={dark ? "moon" : "sun"}
+          initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+          animate={{ rotate: 0, opacity: 1, scale: 1 }}
+          exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+          transition={{ duration: 0.3 }}
+        >
+          {dark ? <Moon size={16} /> : <Sun size={16} />}
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+}
+
+export default function Navbar() {
+  const [dark, toggle] = useTheme();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // highlight the section currently on screen
+  useEffect(() => {
+    const sections = links.map((l) => document.querySelector(l.href)).filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => e.isIntersecting && setActive("#" + e.target.id));
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div className="relative h-screen w-screen flex overflow-hidden dark:bg-gray-900 dark:text-white">
-      {/* Sidebar */}
-      <motion.aside
-        animate={{ width: sidebarOpen ? 256 : 80 }}
-        transition={{ type: "spring", stiffness: 120, damping: 20 }}
-        className="fixed top-0 left-0 h-full bg-blue-950/90 dark:bg-gray-800/90 backdrop-blur-md
-                   border-r border-blue-900/50 dark:border-gray-700 shadow-xl flex flex-col z-20"
-      >
-        {/* Profile (only when expanded) */}
-        <AnimatePresence>
-          {sidebarOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col items-center px-4 py-6 relative"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled ? "border-b border-line/70 bg-bg/75 backdrop-blur-xl" : "border-b border-transparent"
+      }`}
+    >
+      <nav className="mx-auto flex h-16 max-w-page items-center justify-between px-5 md:px-8">
+        <a href="#top" className="font-display text-xl font-semibold tracking-tight">
+          nalluraj<span className="grad-text">.</span>
+        </a>
+
+        <div className="hidden items-center gap-1 md:flex">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors ${
+                active === l.href ? "text-ink" : "text-muted hover:text-ink"
+              }`}
             >
-              <img
-                src={profilePic}
-                alt="Nalluraj"
-                className="w-20 h-20 rounded-full border-2 border-blue-400 shadow-lg mb-4 object-cover"
-              />
-              <h1
-                className="text-2xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 
-                           bg-clip-text text-transparent drop-shadow-md"
-              >
-                Nalluraj
-              </h1>
-              <p className="mt-1 text-sm font-medium text-blue-200/90 dark:text-gray-300 italic">
-                Aspiring Data Scientist
-              </p>
-
-              {/* ✅ Theme toggle near profile when expanded */}
-              <div className="absolute top-2 right-2">
-                <ThemeToggle collapsed={false} />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Nav Links */}
-        <nav className="flex-1 flex flex-col justify-evenly px-2">
-          {links.map((link) => {
-            const isActive = location.pathname === link.path;
-            const Icon = link.icon;
-            return (
-              <motion.div key={link.name} whileHover={{ x: 5 }} className="relative">
-                <Link
-                  to={link.path}
-                  className={`group flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 ${
-                    isActive
-                      ? "bg-blue-700/40 text-blue-300 font-medium border-l-4 border-blue-400 shadow-[0_0_15px_rgba(0,191,255,0.8)]"
-                      : "text-blue-200/80 hover:bg-blue-800/40 hover:text-white dark:hover:bg-gray-700"
-                  }`}
-                >
-                  <Icon
-                    className={`${sidebarOpen ? "w-5 h-5" : "w-7 h-7"} transition-all duration-300`}
-                  />
-                  <AnimatePresence>
-                    {sidebarOpen && (
-                      <motion.span
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {link.name}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </nav>
-
-        {/* Footer Widgets */}
-        <div className="px-4 py-6 space-y-3 relative">
-          {sidebarOpen && (
-            <>
-              <a
-                href="https://github.com/NALLURAJ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-blue-900/50 dark:bg-gray-700 rounded-full p-2 shadow-md hover:bg-blue-800/80 dark:hover:bg-gray-600 transition"
-              >
-                <img src={githubLogo} alt="GitHub" className="w-6 h-6 rounded-full" />
-                <span className="text-blue-200 dark:text-gray-300 text-sm">GitHub</span>
-              </a>
-              <a
-                href="https://leetcode.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-blue-900/50 dark:bg-gray-700 rounded-full p-2 shadow-md hover:bg-blue-800/80 dark:hover:bg-gray-600 transition"
-              >
-                <img src={leetcodeLogo} alt="LeetCode" className="w-6 h-6 rounded-full" />
-                <span className="text-blue-200 dark:text-gray-300 text-sm">LeetCode</span>
-              </a>
-            </>
-          )}
-
-          {/* ✅ Theme toggle at bottom when collapsed */}
-          {!sidebarOpen && (
-            <div className="flex justify-center absolute bottom-6 left-1/2 -translate-x-1/2">
-              <ThemeToggle collapsed />
-            </div>
-          )}
+              {active === l.href && (
+                <motion.span
+                  layoutId="nav-pill"
+                  className="absolute inset-0 -z-10 rounded-full border border-line bg-surface/80"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              {l.label}
+            </a>
+          ))}
         </div>
-      </motion.aside>
 
-      {/* Main Content */}
-      <main
-        className={`relative z-10 flex-1 overflow-y-auto 
-        bg-gradient-to-br from-blue-950/80 via-blue-900/80 to-blue-950/80
-        dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
-        text-white transition-all duration-500 ease-in-out ${
-          sidebarOpen ? "ml-64" : "ml-20"
-        }`}
-      >
-        {/* Toggle Button */}
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="absolute top-4 left-4 bg-blue-800/70 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-gray-600 p-2 rounded-full shadow-md border border-blue-600 dark:border-gray-500 z-30 transition-all"
-        >
-          {sidebarOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <a href={resume} target="_blank" rel="noreferrer" className="btn-primary hidden !py-2 sm:inline-flex">
+            Résumé
+          </a>
+          <ThemeToggle dark={dark} onToggle={toggle} />
+          <button
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line md:hidden"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Menu"
+          >
+            {open ? <X size={16} /> : <Menu size={16} />}
+          </button>
+        </div>
+      </nav>
 
-        <div className="p-6 lg:p-8">{children}</div>
-      </main>
-    </div>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden border-b border-line bg-bg/95 backdrop-blur-xl md:hidden"
+          >
+            <div className="flex flex-col px-5 py-3">
+              {links.map((l) => (
+                <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="py-2.5 text-muted">
+                  {l.label}
+                </a>
+              ))}
+              <a href={resume} target="_blank" rel="noreferrer" className="py-2.5 grad-text font-medium">
+                Résumé
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }
